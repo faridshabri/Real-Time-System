@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+chan aperiodichandle,aperiodicfinish,continueperiodic,start;</declaration>
+	<template>
+		<name x="5" y="5">taskhandle</name>
+		<declaration>// Place local declarations here.
+clock wait;</declaration>
+		<location id="id0" x="-493" y="-671">
+			<name x="-603" y="-688">periodictask_1</name>
+		</location>
+		<location id="id1" x="-484" y="-331">
+			<name x="-595" y="-340">periodictask_2</name>
+		</location>
+		<location id="id2" x="-255" y="-501">
+			<name x="-263" y="-544">aperiodic_task</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-332" y="-374">aperiodicfinish?</label>
+			<nail x="-306" y="-382"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-442" y="-459">aperiodichandle?</label>
+			<nail x="-365" y="-416"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-382" y="-663">aperiodicfinish?</label>
+			<nail x="-314" y="-629"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-450" y="-561">aperiodichandle?</label>
+			<nail x="-340" y="-561"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-484" y="-510">continueperiodic?</label>
+			<nail x="-493" y="-493"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-646" y="-510">continueperiodic?</label>
+			<nail x="-527" y="-493"/>
+		</transition>
+	</template>
+	<template>
+		<name>requestaperiodic</name>
+		<location id="id3" x="-204" y="-17">
+			<name x="-297" y="-34">notrequest</name>
+		</location>
+		<location id="id4" x="-34" y="-17">
+			<name x="-17" y="-51">handle</name>
+		</location>
+		<location id="id5" x="-110" y="-127">
+			<name x="-178" y="-136">request</name>
+		</location>
+		<init ref="id3"/>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-229" y="34">continueperiodic!</label>
+			<nail x="-178" y="34"/>
+			<nail x="-229" y="8"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-153" y="-187">continueperiodic!</label>
+			<nail x="-136" y="-161"/>
+			<nail x="-68" y="-161"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-170" y="-34">aperiodicfinish!</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-76" y="-93">aperiodichandle!</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id5"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+task=taskhandle();
+request=requestaperiodic();
+// List one or more processes to be composed into a system.
+system task,request;
+    </system>
+	<queries>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>
